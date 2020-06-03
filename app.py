@@ -66,4 +66,4 @@ if __name__ == '__main__':
     if platform.system() == "Windows":
         app.run(host="0.0.0.0", port=5000, debug=True)
     elif platform.system() == "Linux":
-        app.run(host='0.0.0.0', port=8000, debug=False)
+        app.run(host='0.0.0.0', port=8001, debug=False)
