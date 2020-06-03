@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumo Leishmaniose</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/resumo.css') }}">
+    <script src="{{ url_for('static', filename='js/resumo.js') }}"></script>
+</head>
+<body>
+<h2>Registros</h2>
+<input type="number" id="quadra_selector" onchange="update_quadra_filter(this)">
+<table id="registros">
+
+</table>
+
+
+</body>
+</html>
