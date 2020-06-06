@@ -1,0 +1,45 @@
+header {
+    height: 40px;
+    display: flex;
+    justify-content: center; /*so funciona com display flex*/
+    align-items: center; /*so funciona com display flex*/
+    min-width: 315px;
+}
+
+.menu {
+    background-color: white;
+    position: fixed;
+    width: 100vw;
+    top: 0; /*so funciona com position fixed*/
+    z-index: 1;
+}
+
+.menu ul {
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu li {
+    list-style: none;
+}
+
+.menu a {
+    display: block;
+    padding: 10px 20px;
+    transition: background-color 1s, color 1s;
+}
+
+.menu a:active,
+.menu a:hover {
+    background-color: teal;
+    color: white;
+}
+
+a {
+    color: teal;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

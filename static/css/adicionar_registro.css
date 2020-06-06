@@ -3,6 +3,9 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+.content{
+    text-align: center;
+}
 
 .input-container input, .input-container select {
     text-align: center;

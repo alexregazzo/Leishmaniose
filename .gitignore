@@ -4,3 +4,8 @@
 **/*.log/
 .gitattributes
 **/*.db
+relatorios/
+zips/
+**/test*
+**/*.jpg
+**/*.jpeg

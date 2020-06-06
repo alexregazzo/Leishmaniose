@@ -4,131 +4,67 @@ from database import Database
 import os
 import logging
 from datetime import datetime
+import utils
 
 
 class Registro:
-    def __init__(self, *,
-                 reg_id,
-                 reg_ra,
-                 reg_nome_animal,
-                 reg_endereco_nome_dono,
-                 reg_quadra,
-                 reg_situacao_coleta,
-                 reg_data_coleta,
-                 reg_teste_data_exame,
-                 reg_teste_resultado,
-                 reg_exame_numero_amostra,
-                 reg_exame_data,
-                 reg_exame_resultado,
-                 reg_sintomas,
-                 reg_eutanasia_realizada,
-                 reg_eutanasia_data,
-                 reg_data_adicionado
-                 ):
-        self.reg_id = reg_id
-        self.reg_ra = reg_ra
-        self.reg_nome_animal = reg_nome_animal
-        self.reg_endereco_nome_dono = reg_endereco_nome_dono
-        self.reg_quadra = reg_quadra
-        self.reg_situacao_coleta = reg_situacao_coleta
-        self.reg_data_coleta = reg_data_coleta
-        self.reg_teste_data_exame = reg_teste_data_exame
-        self.reg_teste_resultado = reg_teste_resultado
-        self.reg_exame_numero_amostra = reg_exame_numero_amostra
-        self.reg_exame_data = reg_exame_data
-        self.reg_exame_resultado = reg_exame_resultado
-        self.reg_sintomas = reg_sintomas
-        self.reg_eutanasia_realizada = reg_eutanasia_realizada
-        self.reg_eutanasia_data = reg_eutanasia_data
-        self.reg_data_adicionado = reg_data_adicionado
+    def __init__(self, **kwargs):
+        self.reg_id = None
+        self.reg_ra = None
+        self.reg_nome_animal = None
+        self.reg_quadra = None
+        self.reg_situacao_coleta = None
+        self.reg_data_coleta = None
+        self.reg_teste_data_exame = None
+        self.reg_teste_resultado = None
+        self.reg_data_adicionado = None
+
+        self.__dict__.update({f"reg_{dado['nome']}": kwargs[f"reg_{dado['nome']}"] for dado in utils.get_data()})
+
+    def __getitem__(self, item):
+        return self.__dict__.get(item, None)
+
+    def toDict(self):
+        return self.__dict__
 
     @classmethod
-    def get_all(cls) -> typing.List[Registro]:
-        query = """SELECT * FROM registro;"""
+    def get_all(cls, *, desc=False) -> typing.List[Registro]:
+        query = f"""SELECT * FROM `registro`{' ORDER BY `reg_data_adicionado` DESC' if desc else ''};"""
         with Database() as db:
             return [cls(**reg) for reg in db.select(query)]
 
     @classmethod
-    def new(cls, *,
-            reg_ra,
-            reg_nome_animal,
-            reg_endereco_nome_dono,
-            reg_quadra,
-            reg_situacao_coleta,
-            reg_data_coleta,
-            reg_teste_data_exame,
-            reg_teste_resultado,
-            reg_exame_numero_amostra,
-            reg_exame_data,
-            reg_exame_resultado,
-            reg_sintomas,
-            reg_eutanasia_realizada,
-            reg_eutanasia_data
-            ) -> Registro:
+    def get_ids(cls, reg_ids, *, desc=False) -> typing.List[Registro]:
+        query = f"""SELECT * FROM `registro` WHERE `reg_id` in ({", ".join([f"'{reg_id}'" for reg_id in reg_ids])}){' ORDER BY `reg_data_adicionado` DESC' if desc else ''};"""
+        with Database() as db:
+            return [cls(**reg) for reg in db.select(query)]
 
-        reg_data_adicionado = datetime.now().strftime("%Y-%m-%d %H:%M%S")
-        query = f"""INSERT INTO registro(
-                reg_ra, 
-                reg_nome_animal, 
-                reg_endereco_nome_dono,
-                reg_quadra,
-                reg_situacao_coleta, 
-                reg_data_coleta,
-                reg_teste_data_exame, 
-                reg_teste_resultado, 
-                reg_exame_numero_amostra,
-                reg_exame_data,
-                reg_exame_resultado,
-                reg_sintomas,
-                reg_eutanasia_realizada,
-                reg_eutanasia_data,
-                reg_data_adicionado
-            ) VALUES ( 
-                '{reg_ra}',
-                '{reg_nome_animal}',
-                '{reg_endereco_nome_dono}',
-                '{reg_quadra}',
-                '{reg_situacao_coleta}',
-                '{reg_data_coleta}',
-                '{reg_teste_data_exame}',
-                '{reg_teste_resultado}',
-                '{reg_exame_numero_amostra}',
-                '{reg_exame_data}',
-                '{reg_exame_resultado}',
-                '{reg_sintomas}',
-                '{reg_eutanasia_realizada}',
-                '{reg_eutanasia_data}',
-                '{reg_data_adicionado}'
-            );
+    @classmethod
+    def new(cls, **kwargs) -> Registro:
         """
-
+        :param kwargs: , reg_ra, reg_nome_animal, reg_quadra, reg_situacao_coleta, reg_data_coleta, reg_teste_data_exame, reg_teste_resultado
+        """
+        reg_data_adicionado = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        dados = utils.get_data()
+        query = f"""
+        INSERT INTO registro
+        ({",".join([f"`reg_{dado['nome']}`" for dado in dados if dado["coletar"] is not None])}, `reg_data_adicionado`)
+        VALUES
+        ({", ".join(["'%s'" % kwargs[f"reg_{dado['nome']}"] for dado in dados if dado["coletar"] is not None])}, '{reg_data_adicionado}');
+        """
         try:
             with Database() as db:
                 reg_id = db.insert(query)
-            return cls(
-                reg_id=reg_id,
-                reg_ra=reg_ra,
-                reg_nome_animal=reg_nome_animal,
-                reg_endereco_nome_dono=reg_endereco_nome_dono,
-                reg_quadra=reg_quadra,
-                reg_situacao_coleta=reg_situacao_coleta,
-                reg_data_coleta=reg_data_coleta,
-                reg_teste_data_exame=reg_teste_data_exame,
-                reg_teste_resultado=reg_teste_resultado,
-                reg_exame_numero_amostra=reg_exame_numero_amostra,
-                reg_exame_data=reg_exame_data,
-                reg_exame_resultado=reg_exame_resultado,
-                reg_sintomas=reg_sintomas,
-                reg_eutanasia_realizada=reg_eutanasia_realizada,
-                reg_eutanasia_data=reg_eutanasia_data,
-                reg_data_adicionado=reg_data_adicionado
-            )
+            return cls(reg_id=reg_id, **kwargs, reg_data_adicionado=reg_data_adicionado)
         except Exception as e:
             logger.exception(e)
             raise
 
+    def __repr__(self):
+        return f"<Registro {self.reg_id} {self.brief()}>"
+
     def brief(self):
-        return f"""{self.reg_ra} {self.reg_nome_animal} {self.reg_endereco_nome_dono}"""
+        return f"""{self.reg_ra} {self.reg_nome_animal}"""
 
 
 CURRENT_DIRPATH = os.path.dirname(__file__)
@@ -144,3 +80,8 @@ fh.setLevel(logging.DEBUG)
 fh.setFormatter(logging.Formatter(LOG_FORMAT))
 logger.addHandler(fh)
 logger.propagate = False
+
+if __name__ == "__main__":
+    import json
+
+    print(json.dumps(Registro.get_all(), default=lambda x: x.toDict()))

@@ -1,0 +1,89 @@
+[
+  {
+    "nome": "id",
+    "mostrar": null,
+    "coletar": null,
+    "tipo": "int",
+    "planilha": null,
+    "valores": null
+  },
+  {
+    "nome": "ra",
+    "mostrar": "RA do cachorro",
+    "coletar": "number",
+    "tipo": "int",
+    "planilha": 0,
+    "valores": null
+  },
+  {
+    "nome": "nome_animal",
+    "mostrar": "Nome do Animal",
+    "coletar": "text",
+    "tipo": "text",
+    "planilha": 1,
+    "valores": null
+  },
+  {
+    "nome": "quadra",
+    "mostrar": "Quadra",
+    "coletar": "number",
+    "tipo": "int",
+    "planilha": null,
+    "valores": null
+  },
+  {
+    "nome": "situacao_coleta",
+    "mostrar": "Situação da coleta",
+    "coletar": "text",
+    "tipo": "text",
+    "planilha": 3,
+    "valores": [
+      "",
+      "COLETADO",
+      "RECUSA DE COLETA",
+      "IMÓVEL FECHADO",
+      "ENTREGA ESPONTÂNEA DO CÃO",
+      "FUGIU / MUDOU / DOADO",
+      "MORTE SEM CAUSA CONHECIDA",
+      "MORTE POR CAUSA DIFERENTE DE LVA",
+      "MORTE POR LVA EM INQUÉRITO ANTERIOR"
+    ]
+  },
+  {
+    "nome": "data_coleta",
+    "mostrar": "Data da coleta",
+    "coletar": "date",
+    "tipo": "date",
+    "planilha": 4,
+    "valores": null
+  },
+  {
+    "nome": "teste_data_exame",
+    "mostrar": "Teste - data do exame",
+    "coletar": "date",
+    "tipo": "date",
+    "planilha": 5,
+    "valores": null
+  },
+  {
+    "nome": "teste_resultado",
+    "mostrar": "Teste - resultado",
+    "coletar": "text",
+    "tipo": "text",
+    "planilha": 6,
+    "valores": [
+      "",
+      "NEGATIVO",
+      "POSITIVO",
+      "NÃO REALIZADO / NÃO SE APLICA"
+    ]
+  },
+  {
+    "nome": "data_adicionado",
+    "mostrar": "Adicionado em",
+    "coletar": null,
+    "tipo": "datetime",
+    "planilha": null,
+    "valores": null
+  }
+]

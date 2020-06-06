@@ -1,8 +1,15 @@
 #registros * {
     border: 1px solid black;
     text-align: center;
+    padding: 3px;
 }
+
 
 table {
     border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+body{
+    text-align: center;
 }
