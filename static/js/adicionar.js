@@ -15,6 +15,7 @@ fetch("/api/dados")
                 let input = document.createElement("input");
                 input.type = dado["coletar"];
                 input.name = `reg_${dado['nome']}`;
+                input.required = true;
                 /*
                 <div class="input-container">
                     <label>Quadra: </label>
