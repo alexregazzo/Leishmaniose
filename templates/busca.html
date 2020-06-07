@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar relatórios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/soft_reset.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/busca.css") }}">
+    <script src="{{ url_for('static', filename='js/busca.js') }}"></script>
+</head>
+<body>
+<header>
+    <nav class="menu">
+        <ul class="container">
+            <li><a href="{{ url_for("resumo_page") }}">INICIO</a></li>
+            <li><a href="{{ url_for("add_register_page") }}">REGISTRAR</a></li>
+            <li><a href="{{ url_for("gerar_relatorio_page") }}">RELATÓRIO</a></li>
+            <li><a href="{{ url_for("busca_page") }}">BUSCA</a></li>
+        </ul>
+    </nav>
+</header>
+<section>
+        <form method="GET" id="form_registros_relatorio">
+            <div class="filters">
+                <div class="input-container">
+                    RA: <input name="filtro_ra" class="change_update" type="number" min="0" step="1">
+                </div>
+                <div class="input-container">
+                    Nome animal: <input name="filtro_nome_animal" class="change_update" type="text">
+                </div>
+                <div class="input-container">
+                    Quadra: <input name="filtro_quadra" class="change_update" type="number" min="0" step="1">
+                </div>
+                <div class="input-container">
+                    Situação coleta: <select name="filtro_situacao_coleta" class="change_update" id="filtros_situacao_coleta"> </select>
+                </div>
+                <div class="input-container">
+                    Inicio coleta dia: <input class="change_update" name="filtro_data_col_inicio" type="date">
+                </div>
+                <div class="input-container">
+                    Fim coleta dia: <input class="change_update" name="filtro_data_col_fim" type="date">
+                </div>
+                <div class="input-container">
+                    Inicio exame dia: <input class="change_update" name="filtro_data_exa_inicio" type="date">
+                </div>
+                <div class="input-container">
+                    Fim exame dia: <input class="change_update" name="filtro_data_exa_fim" type="date">
+                </div>
+                <div class="input-container">
+                    Resultado teste: <select name="filtro_teste_resultado" class="change_update" id="filtros_teste_resultado"> </select>
+                </div>
+                <div class="input-container">
+                    Inicio adicionado dia: <input class="change_update" name="filtro_data_add_inicio" type="date">
+                </div>
+                <div class="input-container">
+                    Fim adicionado dia: <input class="change_update" name="filtro_data_add_fim" type="date">
+                </div>
+                <button type="button" class="click_update">Atualizar registros</button>
+                <button type="button" id="gerar_relatorio">Gerar relatório</button>
+            </div>
+            <table id="registros"></table>
+        </form>
+
+
+</section>
+</body>
+</html>

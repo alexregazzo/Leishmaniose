@@ -60,6 +60,25 @@ class Registro:
             logger.exception(e)
             raise
 
+    @classmethod
+    def update(cls, **kwargs) -> None:
+        """
+        :param kwargs: reg_id, reg_ra, reg_nome_animal, reg_quadra, reg_situacao_coleta, reg_data_coleta, reg_teste_data_exame, reg_teste_resultado
+        """
+        reg_id = kwargs["reg_id"]
+        dados = utils.get_data()
+        query = f"""
+            UPDATE registro SET 
+            {",".join([f"`reg_{dado['nome']}` = '%s'" % kwargs[f"reg_{dado['nome']}"] for dado in dados if dado["coletar"] is not None])}
+            WHERE 
+            `reg_id` = '{reg_id}'
+            """
+
+        print(query)
+
+        with Database() as db:
+            db.update(query)
+
     def __repr__(self):
         return f"<Registro {self.reg_id} {self.brief()}>"
 

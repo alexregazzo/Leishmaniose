@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo Leishmaniose</title>
+    <title>Gerar relatórios</title>
     <link rel="stylesheet" href="{{ url_for('static', filename="css/soft_reset.css") }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/resumo.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
-    <script src="{{ url_for('static', filename='js/resumo.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/registro.css") }}">
+    <script src="{{ url_for('static', filename='js/registro.js') }}"></script>
 </head>
 <body>
 <header>
@@ -20,8 +20,10 @@
         </ul>
     </nav>
 </header>
-
-<h2>Registros</h2>
-<table id="registros"></table>
+<section class="content">
+    <div id="data-collect"></div>
+    <p id="error_message" class="error_message">{{ error_message }}</p>
+    <p id="success_message" class="success_message">{{ success_message }}</p>
+</section>
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar relatórios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/soft_reset.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/relatorio.css") }}">
+    <script src="{{ url_for('static', filename='js/relatorio.js') }}"></script>
+</head>
+<body>
+<header>
+    <nav class="menu">
+        <ul class="container">
+            <li><a href="{{ url_for("resumo_page") }}">INICIO</a></li>
+            <li><a href="{{ url_for("add_register_page") }}">REGISTRAR</a></li>
+            <li><a href="{{ url_for("gerar_relatorio_page") }}">RELATÓRIO</a></li>
+            <li><a href="{{ url_for("busca_page") }}">BUSCA</a></li>
+        </ul>
+    </nav>
+</header>
+<form method="GET" id="form_registros_relatorio">
+    <div>Quadra: <input id="filtro_quadra" class="change_update" type="number" min="0" step="1"></div>
+    <div>Inicio adicionado dia: <input class="change_update" id="filtro_data_add_inicio" type="date"></div>
+    <div>Fim adicionado dia: <input class="change_update" id="filtro_data_add_fim" type="date"></div>
+    <div>Inicio coleta dia: <input class="change_update" id="filtro_data_col_inicio" type="date"></div>
+    <div>Fim coleta dia: <input class="change_update" id="filtro_data_col_fim" type="date"></div>
+    <button type="button" class="click_update">Atualizar registros</button>
+    <button type="button" id="gerar_relatorio">Gerar relatório</button>
+    <table id="registros"></table>
+</form>
+
+
+</body>
+</html>

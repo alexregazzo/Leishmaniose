@@ -15,9 +15,19 @@ def resumo_page():
     return render_template("resumo.html")
 
 
+@app.route("/busca")
+def busca_page():
+    return render_template("busca.html")
+
+
+@app.route("/registro")
+def registro_page():
+    return render_template("registro.html")
+
+
 @app.route("/gerar_relatorio")
 def gerar_relatorio_page():
-    return render_template("gen_relatorio.html")
+    return render_template("relatorio.html")
 
 
 @app.route('/adicionar', methods=["GET", "POST"])
@@ -44,25 +54,46 @@ def add_register_page():
 
 @app.route("/api/registros")
 def api_get():
+    filtro_id = request.args.get("filtro_id", "")
+    filtro_ra = request.args.get("filtro_ra", "")
+    filtro_nome_animal = request.args.get("filtro_nome_animal", "")
     filtro_quadra = request.args.get("filtro_quadra", "")
-    filtro_data_add_inicio = request.args.get("filtro_data_add_inicio", "")
-    filtro_data_add_fim = request.args.get("filtro_data_add_fim", "")
+    filtro_situacao_coleta = request.args.get("filtro_situacao_coleta", "")
     filtro_data_col_inicio = request.args.get("filtro_data_col_inicio", "")
     filtro_data_col_fim = request.args.get("filtro_data_col_fim", "")
+    filtro_data_exa_inicio = request.args.get("filtro_data_exa_inicio", "")
+    filtro_data_exa_fim = request.args.get("filtro_data_exa_fim", "")
+    filtro_teste_resultado = request.args.get("filtro_teste_resultado", "")
+    filtro_data_add_inicio = request.args.get("filtro_data_add_inicio", "")
+    filtro_data_add_fim = request.args.get("filtro_data_add_fim", "")
 
     regs = Registro.get_all(desc=request.args.get("desc", None) is not None)
     results = []
     try:
         for reg in regs:
+            if filtro_id != "" and str(reg.reg_id) != filtro_id:
+                continue
+            if filtro_ra != "" and reg.reg_ra != filtro_ra:
+                continue
+            if filtro_nome_animal != "" and filtro_nome_animal not in reg.reg_nome_animal:
+                continue
             if filtro_quadra != "" and reg["reg_quadra"] != filtro_quadra:
                 continue
-            if filtro_data_add_inicio != "" and not datetime.strptime(reg.reg_data_adicionado, "%Y-%m-%d %H:%M:%S").date() >= datetime.strptime(filtro_data_add_inicio, "%Y-%m-%d").date():
-                continue
-            if filtro_data_add_fim != "" and not datetime.strptime(reg.reg_data_adicionado, "%Y-%m-%d %H:%M:%S").date() <= datetime.strptime(filtro_data_add_fim, "%Y-%m-%d").date():
+            if filtro_situacao_coleta != "" and reg.reg_situacao_coleta != filtro_situacao_coleta:
                 continue
             if filtro_data_col_inicio != "" and not datetime.strptime(reg.reg_data_coleta, "%Y-%m-%d").date() >= datetime.strptime(filtro_data_col_inicio, "%Y-%m-%d").date():
                 continue
             if filtro_data_col_fim != "" and not datetime.strptime(reg.reg_data_coleta, "%Y-%m-%d").date() <= datetime.strptime(filtro_data_col_fim, "%Y-%m-%d").date():
+                continue
+            if filtro_data_exa_inicio != "" and not datetime.strptime(reg.reg_teste_data_exame, "%Y-%m-%d").date() >= datetime.strptime(filtro_data_exa_inicio, "%Y-%m-%d").date():
+                continue
+            if filtro_data_exa_fim != "" and not datetime.strptime(reg.reg_teste_data_exame, "%Y-%m-%d").date() <= datetime.strptime(filtro_data_exa_fim, "%Y-%m-%d").date():
+                continue
+            if filtro_teste_resultado != "" and reg.reg_teste_resultado != filtro_teste_resultado:
+                continue
+            if filtro_data_add_inicio != "" and not datetime.strptime(reg.reg_data_adicionado, "%Y-%m-%d %H:%M:%S").date() >= datetime.strptime(filtro_data_add_inicio, "%Y-%m-%d").date():
+                continue
+            if filtro_data_add_fim != "" and not datetime.strptime(reg.reg_data_adicionado, "%Y-%m-%d %H:%M:%S").date() <= datetime.strptime(filtro_data_add_fim, "%Y-%m-%d").date():
                 continue
             results.append(reg)
     except:
@@ -79,7 +110,6 @@ def api_dados():
 @app.route('/api/relatorio/<string:fname>')
 def api_get_relatorio(fname: str):
     fp = os.path.join("zips/", secure_filename(fname))
-    print(fp)
     if os.path.isfile(fp):
         return send_file(fp, mimetype="application/zip")
     else:
@@ -90,6 +120,18 @@ def api_get_relatorio(fname: str):
 def api_gen_relatorio():
     fpath = sheet_maker.zip_files(sheet_maker.make_sheet(regs=Registro.get_ids(request.form.getlist("reg_ids"))), remove_dirs=True)
     return url_for("api_get_relatorio", fname=os.path.split(fpath)[1])
+
+
+@app.route('/api/update', methods=["POST"])
+def api_update_registro():
+    # post request
+    try:
+        Registro.update(**request.form)
+    except Exception as e:
+        print(e)
+        return Response(status=400)
+    else:
+        return Response(status=200)
 
 
 if __name__ == '__main__':

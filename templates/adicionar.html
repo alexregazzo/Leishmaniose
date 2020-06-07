@@ -6,7 +6,7 @@
     <title>Adicionar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename="css/soft_reset.css") }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename="css/adicionar_registro.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/adicionar.css") }}">
     <script type="application/javascript" src="{{ url_for('static', filename='js/adicionar.js') }}"></script>
 </head>
 <body>
@@ -14,15 +14,16 @@
     <nav class="menu">
         <ul class="container">
             <li><a href="{{ url_for("resumo_page") }}">INICIO</a></li>
-            <li><a href="{{ url_for("add_register_page") }}">ADICIONAR REGISTRO</a></li>
-            <li><a href="{{ url_for("gerar_relatorio_page") }}">GERAR RELATÓRIO</a></li>
+            <li><a href="{{ url_for("add_register_page") }}">REGISTRAR</a></li>
+            <li><a href="{{ url_for("gerar_relatorio_page") }}">RELATÓRIO</a></li>
+            <li><a href="{{ url_for("busca_page") }}">BUSCA</a></li>
         </ul>
     </nav>
 </header>
 <section class="content">
-<div id="data-collect"></div>
-<p class="error_message">{{ error_message }}</p>
-<p class="success_message">{{ success_message }}</p>
-    </section>
+    <div id="data-collect"></div>
+    <p class="error_message">{{ error_message }}</p>
+    <p class="success_message">{{ success_message }}</p>
+</section>
 </body>
 </html>
