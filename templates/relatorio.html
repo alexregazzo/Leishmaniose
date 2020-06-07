@@ -20,17 +20,17 @@
         </ul>
     </nav>
 </header>
-<form method="GET" id="form_registros_relatorio">
-    <div>Quadra: <input id="filtro_quadra" class="change_update" type="number" min="0" step="1"></div>
-    <div>Inicio adicionado dia: <input class="change_update" id="filtro_data_add_inicio" type="date"></div>
-    <div>Fim adicionado dia: <input class="change_update" id="filtro_data_add_fim" type="date"></div>
-    <div>Inicio coleta dia: <input class="change_update" id="filtro_data_col_inicio" type="date"></div>
-    <div>Fim coleta dia: <input class="change_update" id="filtro_data_col_fim" type="date"></div>
-    <button type="button" class="click_update">Atualizar registros</button>
-    <button type="button" id="gerar_relatorio">Gerar relatório</button>
-    <table id="registros"></table>
-</form>
-
-
+<section class="content">
+    <form method="GET" id="form_registros_relatorio">
+        <div class="input-container"><label>Quadra: </label> <input id="filtro_quadra" class="change_update" type="number" min="0" step="1"></div>
+        <div class="input-container"><label>Inicio adicionado dia: </label> <input class="change_update" id="filtro_data_add_inicio" type="date"></div>
+        <div class="input-container"><label>Fim adicionado dia: </label> <input class="change_update" id="filtro_data_add_fim" type="date"></div>
+        <div class="input-container"><label>Inicio coleta dia: </label> <input class="change_update" id="filtro_data_col_inicio" type="date"></div>
+        <div class="input-container"><label>Fim coleta dia: </label> <input class="change_update" id="filtro_data_col_fim" type="date"></div>
+        <button type="button" class="click_update">Atualizar registros</button>
+        <button type="button" id="gerar_relatorio">Gerar relatório</button>
+        <table id="registros"></table>
+    </form>
+</section>
 </body>
 </html>

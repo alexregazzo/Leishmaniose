@@ -11,7 +11,7 @@ header {
 .menu {
     background-color: white;
     position: fixed;
-    width: 100vw;
+    width: 100%;
     top: 0; /*so funciona com position fixed*/
     z-index: 1;
 }
@@ -44,4 +44,15 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 400px) {
+    .menu ul {
+        display: block;
+        justify-content: space-around;
+    }
+
+    header {
+        height: 160px;
+    }
 }

@@ -8,11 +8,29 @@ body {
     margin-top: 20px;
     width: max-content;
     min-width: 400px;
+}
+
+.content{
+    text-align: center;
+}
+form {
     text-align: center;
 }
 
-form {
-    text-align: center;
+.input-container {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-container input, .input-container select, .input-container label {
+    display: block;
+    width: 95vw;
+    max-width: 400px;
+}
+
+.input-container label {
+    text-align: left;
 }
 
 
@@ -76,7 +94,7 @@ form {
     Label the data
 You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
     */
-       td:nth-of-type(1):before {
+    td:nth-of-type(1):before {
         content: "Selecionar";
     }
 

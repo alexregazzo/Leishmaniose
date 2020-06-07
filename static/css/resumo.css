@@ -1,6 +1,9 @@
 
 body {
     min-width: 400px;
+}
+
+.content{
     text-align: center;
 }
 

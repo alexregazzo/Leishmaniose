@@ -4,26 +4,24 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-body {
-    min-width: 400px;
-}
-
 .content {
     text-align: center;
 }
 
-.input-container input, .input-container select {
-    text-align: center;
-    border-radius: 50px;
-}
-
-.input-container select {
+.input-container {
     width: max-content;
-    text-align-last: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.input-container input[type=submit] {
-    background-color: cornflowerblue;
+.input-container input, .input-container select, .input-container label {
+    display: block;
+    width: 95vw;
+    max-width: 400px;
+}
+
+.input-container label {
+    text-align: left;
 }
 
 .error_message {
