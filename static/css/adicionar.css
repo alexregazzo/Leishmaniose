@@ -3,7 +3,12 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-.content{
+
+body {
+    min-width: 400px;
+}
+
+.content {
     text-align: center;
 }
 
