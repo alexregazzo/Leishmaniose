@@ -69,11 +69,14 @@ function get_registry() {
                 }
                 form.appendChild(div);
             }
+            let input_container = document.createElement("div");
+            input_container.classList.add("input-container");
             let button = document.createElement("button");
             button.type = "button";
             button.innerText = "Atualizar";
             button.addEventListener("click", update_registry);
-            form.appendChild(button);
+            input_container.appendChild(button);
+            form.appendChild(input_container);
             document.getElementById("data-collect").appendChild(form);
         });
 }

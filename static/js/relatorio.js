@@ -49,6 +49,7 @@ function update_regs() {
             }
             thead.appendChild(trh);
             table.appendChild(thead);
+            let tbody = document.createElement("tbody");
             for (let i = 0; i < registros.length; i++) {
                 let tr = document.createElement("tr");
                 {
@@ -77,8 +78,9 @@ function update_regs() {
                     td.innerText = text === "" ? "---" : text;
                     tr.appendChild(td);
                 }
-                table.appendChild(tr);
+                tbody.appendChild(tr);
             }
+            table.appendChild(tbody);
         });
 }
 

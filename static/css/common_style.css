@@ -1,0 +1,131 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.content {
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    margin-top: 20px;
+    width: 97vw;
+}
+
+.input-container {
+    width: max-content;
+    margin: 10px auto;
+}
+
+.input-container input, .input-container select, .input-container label {
+    display: block;
+    width: 95vw;
+    max-width: 400px;
+}
+
+.input-container label {
+    text-align: left;
+}
+
+table#registros {
+    margin-top: 20px;
+    border: 1px solid black;
+}
+
+table#registros {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media only screen and (min-width: 770px) {
+    table#registros td {
+        text-align: center;
+    }
+
+    table#registros tr td, table#registros tr th {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    table#registros thead tr {
+        background-color: #bbb;
+    }
+
+    table#registros tbody tr:nth-child(odd) {
+        background-color: #ccc;
+    }
+}
+
+@media only screen and (max-width: 769px) {
+    .input-container button {
+        width: 95vw;
+    }
+
+    table#registros, table#registros thead, table#registros tbody, table#registros th, table#registros td, table#registros tr {
+        display: block;
+    }
+
+    table#registros {
+        background: grey;
+    }
+
+    table#registros thead {
+        display: none;
+    }
+
+    table#registros tr:not(:first-child):not(:last-child) {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-top: 2px solid grey;
+        border-bottom: 2px solid grey;
+    }
+
+    table#registros tr {
+        border-top: 2px solid grey;
+        border-bottom: 2px solid grey;
+    }
+
+    table#registros tr:nth-child(odd) {
+        background: lightgreen;
+    }
+
+    table#registros tr:nth-child(even) {
+        background: lightblue;
+    }
+
+    table#registros td:not(:last-child) {
+        border-bottom: 1px dotted darkslategrey;
+    }
+
+    table#registros td {
+        position: relative;
+        padding-left: 160px;
+    }
+
+    table#registros td:before {
+        position: absolute;
+        top: 0;
+        left: 6px;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    /*Label the data on the file*/
+}
+
+
+.error_message {
+    color: red;
+}
+
+.success_message {
+    color: green;
+}

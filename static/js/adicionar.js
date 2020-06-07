@@ -44,9 +44,12 @@ fetch("/api/dados")
             }
             form.appendChild(div);
         }
+        let input_container = document.createElement("div");
+        input_container.classList.add("input-container");
         let submit = document.createElement("input");
         submit.type = "submit";
-        form.appendChild(submit);
+        input_container.appendChild(submit);
+        form.appendChild(input_container);
         document.getElementById("data-collect").appendChild(form);
     });
 

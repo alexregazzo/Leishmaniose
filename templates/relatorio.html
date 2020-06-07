@@ -6,6 +6,7 @@
     <title>Gerar relatórios</title>
     <link rel="stylesheet" href="{{ url_for('static', filename="css/soft_reset.css") }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/common_style.css") }}">
     <link rel="stylesheet" href="{{ url_for('static', filename="css/relatorio.css") }}">
     <script src="{{ url_for('static', filename='js/relatorio.js') }}"></script>
 </head>
@@ -27,8 +28,12 @@
         <div class="input-container"><label>Fim adicionado dia: </label> <input class="change_update" id="filtro_data_add_fim" type="date"></div>
         <div class="input-container"><label>Inicio coleta dia: </label> <input class="change_update" id="filtro_data_col_inicio" type="date"></div>
         <div class="input-container"><label>Fim coleta dia: </label> <input class="change_update" id="filtro_data_col_fim" type="date"></div>
-        <button type="button" class="click_update">Atualizar registros</button>
-        <button type="button" id="gerar_relatorio">Gerar relatório</button>
+        <div class="input-container">
+            <button type="button" class="click_update">Atualizar registros</button>
+        </div>
+        <div class="input-container">
+            <button type="button" id="gerar_relatorio">Gerar relatório</button>
+        </div>
         <table id="registros"></table>
     </form>
 </section>
