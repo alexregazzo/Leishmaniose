@@ -14,6 +14,10 @@ function download(dataurl, filename) {
     a.click();
 }
 
+function get_week_ago(d){
+	return new Date(d.getTime() - d.getTime() % (24*60*60*1000) + d.getTimezoneOffset() * 60000 - 7*24*60*60*1000);
+}
+
 
 function make_get_params(params) {
     let listparams = [];
@@ -95,7 +99,7 @@ function gen_report() {
 
 document.onreadystatechange = function () {
     if (document.readyState === "complete") {
-        document.getElementById("filtro_data_add_inicio").valueAsDate = new Date();
+        document.getElementById("filtro_data_add_inicio").valueAsDate = get_week_ago(new Date());
         document.getElementById("filtro_data_add_fim").valueAsDate = new Date();
         update_regs();
         for (let elt of document.getElementsByClassName("change_update")) {
