@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerar relatórios</title>
+    <title>Buscar registro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename="css/soft_reset.css") }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename="css/common_style.css") }}">
     <link rel="stylesheet" href="{{ url_for('static', filename="css/busca.css") }}">
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
     <script src="{{ url_for('static', filename='js/busca.js') }}"></script>
 </head>
 <body>
@@ -37,9 +38,6 @@
             <div class="input-container"><label> Fim adicionado dia: </label><input class="change_update" name="filtro_data_add_fim" type="date"></div>
             <div class="input-container">
                 <button type="button" class="click_update">Atualizar registros</button>
-            </div>
-            <div class="input-container">
-                <button type="button" id="gerar_relatorio">Gerar relatório</button>
             </div>
         </div>
         <table id="registros"></table>

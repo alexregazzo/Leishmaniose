@@ -21,7 +21,7 @@ body {
     margin: 10px auto;
 }
 
-.input-container input, .input-container select, .input-container label {
+.input-container input, .input-container select, .input-container label, .input-container button {
     display: block;
     width: 95vw;
     max-width: 400px;

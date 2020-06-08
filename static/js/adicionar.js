@@ -1,8 +1,29 @@
+function submit() {
+    let form = document.getElementById("registrar-form");
+    let fd = new FormData(form);
+
+    fetch("/api/registrar", {method: "POST", body: fd})
+        .then(function (resp) {
+            console.log(arguments);
+            let elt = undefined;
+            if (resp.ok) {
+                elt = document.getElementById("success_message");
+            } else {
+                elt = document.getElementById("error_message");
+            }
+            return Promise.all([elt, resp.text()]);
+        })
+        .then(function ([elt, text]) {
+            elt.innerText = text;
+        });
+}
+
+
 fetch("/api/dados")
     .then(response => response.json())
     .then(function (dados) {
         let form = document.createElement("form");
-        form.method = "POST";
+        form.id = "registrar-form";
         for (let dado of dados) {
             if (dado["coletar"] === null) continue;
             let div = document.createElement("div");
@@ -46,9 +67,11 @@ fetch("/api/dados")
         }
         let input_container = document.createElement("div");
         input_container.classList.add("input-container");
-        let submit = document.createElement("input");
-        submit.type = "submit";
-        input_container.appendChild(submit);
+        let button = document.createElement("button");
+        button.type = "button";
+        button.innerText = "Registrar";
+        button.addEventListener("click", submit);
+        input_container.appendChild(button);
         form.appendChild(input_container);
         document.getElementById("data-collect").appendChild(form);
     });

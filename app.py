@@ -30,26 +30,9 @@ def gerar_relatorio_page():
     return render_template("relatorio.html")
 
 
-@app.route('/adicionar', methods=["GET", "POST"])
+@app.route('/adicionar')
 def add_register_page():
-    if request.method == "POST":
-        # post request
-        coletados = {}
-        for dado in utils.get_data():
-            if dado["coletar"]:
-                try:
-                    coletados[f"reg_{dado['nome']}"] = request.form[f"reg_{dado['nome']}"]
-                except KeyError as e:
-                    return render_template("adicionar.html", error_message=f"Erro ao adicionar registro, dados insuficientes, faltando: '{str(e)}'")
-        try:
-            reg = Registro.new(**coletados)
-        except:
-            return render_template("adicionar.html", error_message="Erro ao adicionar registro")
-        else:
-            return render_template("adicionar.html", success_message=f"""Adicionado com sucesso: {reg.brief()}""")
-    else:
-        # get request
-        return render_template("adicionar.html")
+    return render_template("adicionar.html")
 
 
 @app.route("/api/registros")
@@ -114,6 +97,20 @@ def api_get_relatorio(fname: str):
         return send_file(fp, mimetype="application/zip")
     else:
         return Response(status=404)
+
+
+@app.route('/api/registrar', methods=["POST"])
+def api_registrar():
+    try:
+        reg = Registro.new(**{f"reg_{dado['nome']}": request.form[f"reg_{dado['nome']}"] for dado in utils.get_data() if dado["coletar"]})
+    except KeyError as e:
+        print(1, e)
+        return Response(response=f"Erro ao adicionar registro, dados insuficientes", status=400)
+    except Exception as e:
+        print(2, e)
+        return Response(response=f"Erro ao adicionar registro", status=400)
+    else:
+        return Response(response=f"""Adicionado com sucesso: '{reg.brief()}'""", status=201)
 
 
 @app.route('/api/gen_relatorio', methods=["POST"])
