@@ -60,8 +60,8 @@ class Registro:
             logger.exception(e)
             raise
 
-    @classmethod
-    def update(cls, **kwargs) -> None:
+    @staticmethod
+    def update(**kwargs) -> None:
         """
         :param kwargs: reg_id, reg_ra, reg_nome_animal, reg_quadra, reg_situacao_coleta, reg_data_coleta, reg_teste_data_exame, reg_teste_resultado
         """
@@ -73,11 +73,16 @@ class Registro:
             WHERE 
             `reg_id` = '{reg_id}'
             """
-
-        print(query)
-
         with Database() as db:
             db.update(query)
+
+    @staticmethod
+    def delete(*, reg_id, **kwargs) -> None:
+        query = f"""
+        DELETE FROM registro
+        WHERE `reg_id`='{reg_id}'"""
+        with Database() as db:
+            db.delete(query)
 
     def __repr__(self):
         return f"<Registro {self.reg_id} {self.brief()}>"

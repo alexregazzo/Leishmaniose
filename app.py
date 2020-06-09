@@ -124,11 +124,22 @@ def api_update_registro():
     # post request
     try:
         Registro.update(**request.form)
-    except Exception as e:
-        print(e)
+    except:
         return Response(status=400)
     else:
         return Response(status=200)
+
+
+@app.route('/api/delete', methods=["POST"])
+def api_delete_registro():
+    # post request
+    try:
+        Registro.delete(**request.form)
+    except Exception as e:
+        print(e)
+        return Response(response="Erro ao deletar registro", status=400)
+    else:
+        return Response(response="Registro deletado com sucesso", status=200)
 
 
 if __name__ == '__main__':

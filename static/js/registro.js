@@ -69,14 +69,23 @@ function get_registry() {
                 }
                 form.appendChild(div);
             }
-            let input_container = document.createElement("div");
-            input_container.classList.add("input-container");
-            let button = document.createElement("button");
-            button.type = "button";
-            button.innerText = "Atualizar";
-            button.addEventListener("click", update_registry);
-            input_container.appendChild(button);
-            form.appendChild(input_container);
+            let input_container_update = document.createElement("div");
+            input_container_update.classList.add("input-container");
+            let update_button = document.createElement("button");
+            update_button.type = "button";
+            update_button.innerText = "Atualizar";
+            update_button.addEventListener("click", update_registry);
+            input_container_update.appendChild(update_button);
+            form.appendChild(input_container_update);
+            let input_container_delete = document.createElement("div");
+            input_container_delete.classList.add("input-container");
+            let delete_button = document.createElement("button");
+            delete_button.classList.add("caution");
+            delete_button.type = "button";
+            delete_button.innerText = "Deletar";
+            delete_button.addEventListener("click", delete_registry);
+            input_container_delete.appendChild(delete_button);
+            form.appendChild(input_container_delete);
             document.getElementById("data-collect").appendChild(form);
         });
 }
@@ -92,6 +101,25 @@ function update_registry() {
             }
 
         })
+}
+
+function delete_registry() {
+    let fd = new FormData(document.getElementById("form-registro"));
+    if (confirm("Tem certeza que deseja deletar registro?")) {
+        fetch("/api/delete", {method: "POST", body: fd})
+            .then(function (resp) {
+                let elt;
+                if (resp.ok) {
+                    elt = document.getElementById("success_message")
+                } else {
+                    elt = document.getElementById("error_message")
+                }
+                return Promise.all([elt, resp.text()])
+            })
+            .then(function ([elt, text]) {
+                elt.innerHTML = text;
+            })
+    }
 }
 
 
