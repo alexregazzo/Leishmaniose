@@ -28,37 +28,37 @@ class Database:
             self.conn.rollback()
         self.lock.release()
 
-    def insert(self, query: str):
+    def insert(self, sql: str, **kwargs):
         try:
-            self.cursor.execute(query)
+            self.cursor.execute(sql, kwargs)
             return self.cursor.lastrowid
         except Exception as e:
-            logger.debug(query)
+            logger.debug(sql, kwargs)
             logger.exception(e)
             raise
 
-    def select(self, query: str):
+    def select(self, sql: str, **kwargs):
         try:
-            self.cursor.execute(query)
+            self.cursor.execute(sql, kwargs)
             return self.cursor.fetchall()
         except Exception as e:
-            logger.debug(query)
+            logger.debug(sql, kwargs)
             logger.exception(e)
             raise
 
-    def update(self, query: str):
+    def update(self, sql: str, **kwargs):
         try:
-            self.cursor.execute(query)
+            self.cursor.execute(sql, kwargs)
         except Exception as e:
-            logger.debug(query)
+            logger.debug(sql, kwargs)
             logger.exception(e)
             raise
 
-    def delete(self, query: str):
+    def delete(self, sql: str, **kwargs):
         try:
-            self.cursor.execute(query)
+            self.cursor.execute(sql, kwargs)
         except Exception as e:
-            logger.debug(query)
+            logger.debug(sql, kwargs)
             logger.exception(e)
             raise
 

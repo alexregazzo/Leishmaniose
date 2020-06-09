@@ -58,6 +58,7 @@ function get_registry() {
                         select.appendChild(option);
                     }
                     select.value = registro[`reg_${dado['nome']}`];
+                    select.addEventListener("change", something_changed);
                     /*
                      <div class="input-container">
                         <label>Situação da Coleta: </label>
@@ -95,6 +96,7 @@ function update_registry() {
     fetch("/api/update", {method: "POST", body: fd})
         .then(function (resp) {
             if (resp.ok) {
+                CHANGED = false;
                 document.getElementById("success_message").innerText = "Atualizado com sucesso " + new Date().toLocaleString();
             } else {
                 document.getElementById("error_message").innerText = "Erro ao atualizar " + new Date().toLocaleString();
@@ -110,17 +112,30 @@ function delete_registry() {
             .then(function (resp) {
                 let elt;
                 if (resp.ok) {
-                    elt = document.getElementById("success_message")
+                    elt = document.getElementById("success_message");
+                    CHANGED = false;
                 } else {
-                    elt = document.getElementById("error_message")
+                    elt = document.getElementById("error_message");
                 }
-                return Promise.all([elt, resp.text()])
+                return Promise.all([elt, resp.text()]);
             })
             .then(function ([elt, text]) {
                 elt.innerHTML = text;
             })
     }
 }
+
+let CHANGED = false;
+
+function something_changed() {
+    CHANGED = true;
+}
+
+window.addEventListener("beforeunload", function (evt) {
+    if (CHANGED) {
+        evt.preventDefault();
+    }
+});
 
 
 document.onreadystatechange = function () {

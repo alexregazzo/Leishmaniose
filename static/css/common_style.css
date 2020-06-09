@@ -14,6 +14,7 @@ input::-webkit-inner-spin-button {
 body {
     margin-top: 20px;
     width: 97vw;
+    margin-bottom: 100px;
 }
 
 .input-container {

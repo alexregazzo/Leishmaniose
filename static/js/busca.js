@@ -20,6 +20,7 @@ function update_regs() {
     let filters_dict = {};
     for (let [key, val] of fd.entries()) filters_dict[key] = val;
     let filters = make_get_params(filters_dict);
+    console.log(filters);
     Promise.all([fetch("/api/dados").then(r => r.json()), fetch("/api/registros?desc&" + filters).then(r => r.json())])
         .then(function ([dados, registros]) {
             let ptable = document.getElementById("registros");
@@ -39,7 +40,7 @@ document.onreadystatechange = function () {
                         let select = document.getElementById(`filtros_${dado["nome"]}`);
                         for (let i = 0; i < dado["valores"].length; i++) {
                             let option = document.createElement("option");
-                            option.value = i.toString();
+                            if (dado["valores"][i] !== "") option.value = i.toString();
                             option.innerText = dado["valores"][i];
                             select.appendChild(option);
                         }

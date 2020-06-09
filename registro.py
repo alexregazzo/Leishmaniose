@@ -1,6 +1,7 @@
 from __future__ import annotations
 import typing
 from database import Database
+import database.utils
 import os
 import logging
 from datetime import datetime
@@ -45,16 +46,11 @@ class Registro:
         :param kwargs: , reg_ra, reg_nome_animal, reg_quadra, reg_situacao_coleta, reg_data_coleta, reg_teste_data_exame, reg_teste_resultado
         """
         reg_data_adicionado = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        dados = utils.get_data()
-        query = f"""
-        INSERT INTO registro
-        ({",".join([f"`reg_{dado['nome']}`" for dado in dados if dado["coletar"] is not None])}, `reg_data_adicionado`)
-        VALUES
-        ({", ".join(["'%s'" % kwargs[f"reg_{dado['nome']}"] for dado in dados if dado["coletar"] is not None])}, '{reg_data_adicionado}');
-        """
+        sql = database.utils.make_insert(*[f"reg_{dado['nome']}" for dado in utils.get_data() if dado["coletar"] is not None], "reg_data_adicionado", t_name="registro")
+
         try:
             with Database() as db:
-                reg_id = db.insert(query)
+                reg_id = db.insert(sql, **kwargs, reg_data_adicionado=reg_data_adicionado)
             return cls(reg_id=reg_id, **kwargs, reg_data_adicionado=reg_data_adicionado)
         except Exception as e:
             logger.exception(e)
@@ -65,24 +61,15 @@ class Registro:
         """
         :param kwargs: reg_id, reg_ra, reg_nome_animal, reg_quadra, reg_situacao_coleta, reg_data_coleta, reg_teste_data_exame, reg_teste_resultado
         """
-        reg_id = kwargs["reg_id"]
-        dados = utils.get_data()
-        query = f"""
-            UPDATE registro SET 
-            {",".join([f"`reg_{dado['nome']}` = '%s'" % kwargs[f"reg_{dado['nome']}"] for dado in dados if dado["coletar"] is not None])}
-            WHERE 
-            `reg_id` = '{reg_id}'
-            """
+        sql = database.utils.make_update(set_list=[f"reg_{dado['nome']}" for dado in utils.get_data() if dado["coletar"] is not None], where_list=["reg_id"], t_name="registro")
         with Database() as db:
-            db.update(query)
+            db.update(sql, **kwargs)
 
     @staticmethod
-    def delete(*, reg_id, **kwargs) -> None:
-        query = f"""
-        DELETE FROM registro
-        WHERE `reg_id`='{reg_id}'"""
+    def delete(**kwargs) -> None:
+        sql = database.utils.make_delete("reg_id", t_name="registro")
         with Database() as db:
-            db.delete(query)
+            db.delete(sql, **kwargs)
 
     def __repr__(self):
         return f"<Registro {self.reg_id} {self.brief()}>"

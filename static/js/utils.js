@@ -73,7 +73,6 @@ function create_table_registros(dados, registros, add_before_every_column = null
         for (let j = 0; j < dados.length; j++) {
             if (dados[j]["mostrar"] === null) continue;
             let td = document.createElement("td");
-
             td.innerText = parse_data(dados[j], registros[i][`reg_${dados[j]["nome"]}`]);
             tr.appendChild(td);
         }
