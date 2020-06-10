@@ -95,11 +95,21 @@ function update_registry() {
     let fd = new FormData(document.getElementById("form-registro"));
     fetch("/api/update", {method: "POST", body: fd})
         .then(function (resp) {
+            let elt_suc = document.getElementById("success_message");
+            let elt_err = document.getElementById("error_message");
+            elt_suc.innerText = "";
+            elt_err.innerText = "";
             if (resp.ok) {
                 CHANGED = false;
-                document.getElementById("success_message").innerText = "Atualizado com sucesso " + new Date().toLocaleString();
+                elt_suc.innerText = "Atualizado com sucesso " + new Date().toLocaleString();
+                document.body.classList.remove("success-animate");
+                void document.body.offsetWidth;
+                document.body.classList.add("success-animate");
             } else {
-                document.getElementById("error_message").innerText = "Erro ao atualizar " + new Date().toLocaleString();
+                elt_err.innerText = "Erro ao atualizar " + new Date().toLocaleString();
+                document.body.classList.remove("error-animate");
+                void document.body.offsetWidth;
+                document.body.classList.add("error-animate");
             }
 
         })
@@ -111,16 +121,26 @@ function delete_registry() {
         fetch("/api/delete", {method: "POST", body: fd})
             .then(function (resp) {
                 let elt;
+                let elt_suc = document.getElementById("success_message");
+                let elt_err = document.getElementById("error_message");
+                elt_suc.innerText = "";
+                elt_err.innerText = "";
                 if (resp.ok) {
-                    elt = document.getElementById("success_message");
+                    elt = elt_suc;
                     CHANGED = false;
+                    document.body.classList.remove("success-animate");
+                    void document.body.offsetWidth;
+                    document.body.classList.add("success-animate");
                 } else {
-                    elt = document.getElementById("error_message");
+                    elt = elt_err;
+                    document.body.classList.remove("error-animate");
+                    void document.body.offsetWidth;
+                    document.body.classList.add("error-animate");
                 }
                 return Promise.all([elt, resp.text()]);
             })
             .then(function ([elt, text]) {
-                elt.innerHTML = text;
+                elt.innerHTML = text + " " + new Date().toLocaleString();
             })
     }
 }

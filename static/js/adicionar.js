@@ -5,16 +5,26 @@ function submit() {
     fetch("/api/registrar", {method: "POST", body: fd})
         .then(function (resp) {
             console.log(arguments);
-            let elt = undefined;
+            let elt_suc = document.getElementById("success_message");
+            let elt_err = document.getElementById("error_message");
+            elt_suc.innerText = "";
+            elt_err.innerText = "";
+            let elt;
             if (resp.ok) {
-                elt = document.getElementById("success_message");
+                elt = elt_suc;
+                document.body.classList.remove("success-animate");
+                void document.body.offsetWidth;
+                document.body.classList.add("success-animate");
             } else {
-                elt = document.getElementById("error_message");
+                elt = elt_err;
+                document.body.classList.remove("error-animate");
+                void document.body.offsetWidth;
+                document.body.classList.add("error-animate");
             }
             return Promise.all([elt, resp.text()]);
         })
         .then(function ([elt, text]) {
-            elt.innerText = text;
+            elt.innerText = text + " " + new Date().toLocaleString();
         });
 }
 

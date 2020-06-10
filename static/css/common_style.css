@@ -146,3 +146,29 @@ table#registros {
 .success_message {
     color: green;
 }
+
+.success-animate {
+    animation: 1s linear animar_sucesso 2 alternate;
+}
+
+.error-animate {
+    animation: 1s linear animar_erro 2 alternate;
+}
+
+@keyframes animar_sucesso {
+    from {
+        background-color: inherit;
+    }
+    to {
+        background-color: green;
+    }
+}
+
+@keyframes animar_erro {
+    from {
+        background-color: inherit;
+    }
+    to {
+        background-color: red;
+    }
+}
