@@ -1,2 +1,4 @@
+google-auth-oauthlib
+gspread
 flask
 python-docx

@@ -70,7 +70,7 @@ filepath = os.path.join(CURRENT_DIRPATH, LOG_DIRPATH, F"{LOG_NAME}.log")
 LOG_FORMAT = "%(asctime)s - %(levelname)s :: %(name)s %(lineno)d :: %(message)s"
 logger = logging.getLogger(LOG_NAME)
 logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler(filepath, "w", encoding='utf-8')
+fh = logging.FileHandler(filepath, "a", encoding='utf-8')
 fh.setLevel(logging.DEBUG)
 fh.setFormatter(logging.Formatter(LOG_FORMAT))
 logger.addHandler(fh)

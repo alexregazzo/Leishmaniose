@@ -2,14 +2,13 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo Leishmaniose</title>
+    <title>Planilha</title>
     <link rel="stylesheet" href="{{ url_for('static', filename="css/soft_reset.css") }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/common_style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/resumo.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/planilha.css') }}">
     <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/resumo.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/planilha.js') }}"></script>
 </head>
 <body>
 <header>
@@ -24,8 +23,17 @@
     </nav>
 </header>
 <section class="content">
-    <h2>Registros</h2>
-    <table id="registros"></table>
+    <a id="planilha-link" target="_blank" href="https://docs.google.com/spreadsheets/d/1GgmqAIpPbnBJCtDyt2uE27MlbBKmb0037SYUMfpu9oU/edit?usp=sharing">Link da planilha</a>
+    <div class="input-container">
+        <button type="button" id="get-data-from-spreadsheet">PEGAR DADOS DA PLANILHA</button>
+    </div>
+    <div class="input-container">
+        <button type="button" id="delete-inserted-data-from-spreadsheet">DELETAR DADOS JÁ INSERIDOS</button>
+    </div>
+    <p class="error_message" id="error-message"></p>
+    <p class="success_message" id="success-message"></p>
+    <h2>Dados adicionados</h2>
+    <div id="dados-adicionados"></div>
 </section>
 </body>
 </html>

@@ -45,13 +45,13 @@ a:hover {
     text-decoration: underline;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 540px) {
     .menu ul {
         display: block;
         justify-content: space-around;
     }
 
     header {
-        height: 160px;
+        height: 200px;
     }
 }

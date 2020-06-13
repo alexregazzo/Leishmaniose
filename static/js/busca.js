@@ -20,7 +20,6 @@ function update_regs() {
     let filters_dict = {};
     for (let [key, val] of fd.entries()) filters_dict[key] = val;
     let filters = make_get_params(filters_dict);
-    console.log(filters);
     Promise.all([fetch("/api/dados").then(r => r.json()), fetch("/api/registros?desc&" + filters).then(r => r.json())])
         .then(function ([dados, registros]) {
             let ptable = document.getElementById("registros");

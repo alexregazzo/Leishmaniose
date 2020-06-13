@@ -6,6 +6,7 @@ import utils
 import json
 from datetime import datetime
 import sheet_maker
+import planilha
 
 app = Flask(__name__)
 
@@ -13,6 +14,11 @@ app = Flask(__name__)
 @app.route('/')
 def resumo_page():
     return render_template("resumo.html")
+
+
+@app.route("/planilha")
+def planilha_page():
+    return render_template("planilha.html")
 
 
 @app.route("/busca")
@@ -103,11 +109,9 @@ def api_get_relatorio(fname: str):
 def api_registrar():
     try:
         reg = Registro.new(**{f"reg_{dado['nome']}": request.form[f"reg_{dado['nome']}"] for dado in utils.get_data() if dado["coletar"]})
-    except KeyError as e:
-        print(1, e)
+    except KeyError:
         return Response(response=f"Erro ao adicionar registro, dados insuficientes", status=400)
-    except Exception as e:
-        print(2, e)
+    except Exception:
         return Response(response=f"Erro ao adicionar registro", status=400)
     else:
         return Response(response=f"""Adicionado com sucesso: '{reg.brief()}'""", status=201)
@@ -140,6 +144,29 @@ def api_delete_registro():
         return Response(response="Erro ao deletar registro", status=400)
     else:
         return Response(response="Registro deletado com sucesso", status=200)
+
+
+@app.route('/api/get_data_from_spreadsheet', methods=["POST"])
+def api_get_data_from_spreadsheet():
+    # post request
+    try:
+        records = planilha.get_new_records()
+        dados = utils.get_data()
+    except:
+        return Response(response="Erro ao processar planilha", status=400)
+    else:
+        return Response(response=json.dumps({"dados": dados, "registros": records}, default=lambda x: x.toDict()), status=200)
+
+
+@app.route('/api/delete_inserted_data_from_spreadsheet', methods=["POST"])
+def api_delete_inserted_data_from_spreadsheet():
+    # post request
+    try:
+        planilha.delete_inserted_data()
+    except:
+        return Response(response="Erro ao deletar dados da planilha", status=400)
+    else:
+        return Response(response="Dados deletados com sucesso", status=200)
 
 
 if __name__ == '__main__':

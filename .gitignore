@@ -9,3 +9,4 @@ zips/
 **/test*
 **/*.jpg
 **/*.jpeg
+google_service_key.json
