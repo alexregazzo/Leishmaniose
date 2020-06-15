@@ -76,7 +76,7 @@ def delete_inserted_data() -> None:
 CURRENT_DIRPATH = os.path.dirname(__file__)
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 SERVICE_ACCOUNT_FILE = os.path.join(CURRENT_DIRPATH, 'google_service_key.json')
-LOG_DIRPATH = "../log"
+LOG_DIRPATH = "log"
 LOG_NAME = os.path.splitext(os.path.split(__file__)[1])[0]
 os.makedirs(os.path.join(CURRENT_DIRPATH, LOG_DIRPATH), exist_ok=True)
 filepath = os.path.join(CURRENT_DIRPATH, LOG_DIRPATH, F"{LOG_NAME}.log")
