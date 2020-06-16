@@ -43,7 +43,7 @@ def get_new_records() -> typing.List[Registro]:
                 logger.exception(e)
             else:
                 added.append(reg)
-                updates.append({"range": "H" + str(i + 1), "values": [[reg.reg_data_adicionado]]})
+                updates.append({"range": "J" + str(i + 1), "values": [[reg.reg_data_adicionado]]})
 
         sheet.batch_update(updates)
     except Exception as e:
