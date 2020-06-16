@@ -11,5 +11,3 @@ LOG_FORMAT = "%(asctime)s - %(levelname)s :: %(name)s %(lineno)d :: %(message)s"
 os.makedirs(LOG_DIRPATH, exist_ok=True)
 os.makedirs(ZIP_DIRPATH, exist_ok=True)
 os.makedirs(REPORT_DIRPATH, exist_ok=True)
-
-
