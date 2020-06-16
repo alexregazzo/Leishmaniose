@@ -24,6 +24,22 @@
     "valores": null
   },
   {
+    "nome": "nome_dono",
+    "mostrar": "Nome do proprietário",
+    "coletar": "text",
+    "tipo": "text",
+    "planilha": null,
+    "valores": null
+  },
+  {
+    "nome": "endereco",
+    "mostrar": "Endereço",
+    "coletar": "text",
+    "tipo": "text",
+    "planilha": null,
+    "valores": null
+  },
+  {
     "nome": "quadra",
     "mostrar": "Quadra",
     "coletar": "number",

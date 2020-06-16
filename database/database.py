@@ -1,7 +1,7 @@
-import logging
 import threading
 import sqlite3
 import os
+import utils
 
 CURRENT_DIRPATH = os.path.dirname(__file__)
 TABLES_PATH = os.path.join(CURRENT_DIRPATH, "tables.sql")
@@ -19,14 +19,18 @@ class Database:
 
     def __enter__(self):
         self.lock.acquire()
+        logger.debug("Lock acquired")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if exc_val is None:
             self.conn.commit()
+            logger.debug("Commited")
         else:
             self.conn.rollback()
+            logger.debug("Rolledback")
         self.lock.release()
+        logger.debug("Lock released")
 
     def insert(self, sql: str, **kwargs):
         try:
@@ -63,15 +67,4 @@ class Database:
             raise
 
 
-LOG_DIRPATH = "../log"
-LOG_NAME = os.path.splitext(os.path.split(__file__)[1])[0]
-os.makedirs(os.path.join(CURRENT_DIRPATH, LOG_DIRPATH), exist_ok=True)
-filepath = os.path.join(CURRENT_DIRPATH, LOG_DIRPATH, F"{LOG_NAME}.log")
-LOG_FORMAT = "%(asctime)s - %(levelname)s :: %(name)s %(lineno)d :: %(message)s"
-logger = logging.getLogger(LOG_NAME)
-logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler(filepath, "a", encoding='utf-8')
-fh.setLevel(logging.DEBUG)
-fh.setFormatter(logging.Formatter(LOG_FORMAT))
-logger.addHandler(fh)
-logger.propagate = False
+logger = utils.get_logger(__file__)

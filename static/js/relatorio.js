@@ -23,7 +23,7 @@ function update_regs() {
 }
 
 function gen_report() {
-    fetch("/api/gen_relatorio",
+    fetch("/api/gerar_relatorio",
         {method: "POST", body: new FormData(document.querySelector("#form_registros_relatorio"))})
         .then(resp => resp.text())
         .then(function (path) {

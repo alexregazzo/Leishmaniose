@@ -46,7 +46,4 @@ def make_delete(*args: str, t_name: str) -> str:
 
 
 if __name__ == "__main__":
-    print(make_select("a", "b", "c", "d", t_name="tabela"))
-    print(make_insert("a", "b", "c", "d", t_name="tabela"))
-    print(make_update(set_list=["a", "b", "c", "d"], where_list=["e", "f", "g", "h"], t_name="tabela"))
-    print(make_delete("a", "b", "c", "d", t_name="tabela"))
+    pass

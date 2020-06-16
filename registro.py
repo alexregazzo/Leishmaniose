@@ -2,8 +2,6 @@ from __future__ import annotations
 import typing
 from database import Database
 import database.utils
-import os
-import logging
 from datetime import datetime
 import utils
 
@@ -13,6 +11,8 @@ class Registro:
         self.reg_id = None
         self.reg_ra = None
         self.reg_nome_animal = None
+        self.reg_nome_dono = None
+        self.reg_endereco = None
         self.reg_quadra = None
         self.reg_situacao_coleta = None
         self.reg_data_coleta = None
@@ -25,7 +25,7 @@ class Registro:
     def __getitem__(self, item):
         return self.__dict__.get(item, None)
 
-    def toDict(self):
+    def json(self):
         return self.__dict__
 
     @classmethod
@@ -47,7 +47,6 @@ class Registro:
         """
         reg_data_adicionado = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         sql = database.utils.make_insert(*[f"reg_{dado['nome']}" for dado in utils.get_data() if dado["coletar"] is not None], "reg_data_adicionado", t_name="registro")
-
         try:
             with Database() as db:
                 reg_id = db.insert(sql, **kwargs, reg_data_adicionado=reg_data_adicionado)
@@ -78,21 +77,7 @@ class Registro:
         return f"""{self.reg_ra} {self.reg_nome_animal}"""
 
 
-CURRENT_DIRPATH = os.path.dirname(__file__)
-LOG_DIRPATH = "log"
-LOG_NAME = os.path.splitext(os.path.split(__file__)[1])[0]
-os.makedirs(os.path.join(CURRENT_DIRPATH, LOG_DIRPATH), exist_ok=True)
-filepath = os.path.join(CURRENT_DIRPATH, LOG_DIRPATH, F"{LOG_NAME}.log")
-LOG_FORMAT = "%(asctime)s - %(levelname)s :: %(name)s %(lineno)d :: %(message)s"
-logger = logging.getLogger(LOG_NAME)
-logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler(filepath, "w", encoding='utf-8')
-fh.setLevel(logging.DEBUG)
-fh.setFormatter(logging.Formatter(LOG_FORMAT))
-logger.addHandler(fh)
-logger.propagate = False
+logger = utils.get_logger(__file__)
 
 if __name__ == "__main__":
-    import json
-
-    print(json.dumps(Registro.get_all(), default=lambda x: x.toDict()))
+    pass

@@ -4,7 +4,6 @@ import os
 import utils
 from registro import Registro
 import typing
-import logging
 
 
 def get_sheet_client() -> gspread.client.Client:
@@ -76,18 +75,6 @@ def delete_inserted_data() -> None:
 CURRENT_DIRPATH = os.path.dirname(__file__)
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 SERVICE_ACCOUNT_FILE = os.path.join(CURRENT_DIRPATH, 'google_service_key.json')
-LOG_DIRPATH = "log"
-LOG_NAME = os.path.splitext(os.path.split(__file__)[1])[0]
-os.makedirs(os.path.join(CURRENT_DIRPATH, LOG_DIRPATH), exist_ok=True)
-filepath = os.path.join(CURRENT_DIRPATH, LOG_DIRPATH, F"{LOG_NAME}.log")
-LOG_FORMAT = "%(asctime)s - %(levelname)s :: %(name)s %(lineno)d :: %(message)s"
-logger = logging.getLogger(LOG_NAME)
-logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler(filepath, "a", encoding='utf-8')
-fh.setLevel(logging.DEBUG)
-fh.setFormatter(logging.Formatter(LOG_FORMAT))
-logger.addHandler(fh)
-logger.propagate = False
-
+logger = utils.get_logger(__file__)
 if __name__ == "__main__":
     delete_inserted_data()

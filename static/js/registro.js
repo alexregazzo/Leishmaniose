@@ -93,7 +93,7 @@ function get_registry() {
 
 function update_registry() {
     let fd = new FormData(document.getElementById("form-registro"));
-    fetch("/api/update", {method: "POST", body: fd})
+    fetch("/api/atualizar", {method: "POST", body: fd})
         .then(function (resp) {
             let elt_suc = document.getElementById("success_message");
             let elt_err = document.getElementById("error_message");
