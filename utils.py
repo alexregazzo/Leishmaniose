@@ -18,7 +18,7 @@ def get_data() -> dict:
 
 def get_logger(path: str, LOG_NAME: str = None, propagate: bool = False) -> logging.Logger:
     if LOG_NAME is None:
-        LOG_NAME = os.path.splitext(os.path.relpath(path, settings.ROOT_DIRPATH).replace("\\", "_"))[0] + ".log"
+        LOG_NAME = os.path.splitext(os.path.relpath(path, settings.ROOT_DIRPATH).replace("\\", "_").replace("/", "_"))[0] + ".log"
     logger_maker = logging.getLogger(LOG_NAME)
     if os.path.splitext(LOG_NAME)[1] != ".log":
         LOG_NAME += ".log"
