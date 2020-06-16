@@ -28,7 +28,7 @@ class Database:
             logger.debug("Commited")
         else:
             self.conn.rollback()
-            logger.debug("Rolledback")
+            logger.warning("Rolledback")
         self.lock.release()
         logger.debug("Lock released")
 

@@ -1,6 +1,6 @@
 import os
 
-DEVELOPMENT = True
+DEVELOPMENT = False
 ROOT_DIRPATH = os.path.dirname(__file__)
 LOG_DIRPATH = os.path.join(ROOT_DIRPATH, "log")
 ZIP_DIRPATH = os.path.join(ROOT_DIRPATH, "zips")

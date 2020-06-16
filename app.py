@@ -139,7 +139,7 @@ def api_get_relatorio(fname: str):
 @app.route('/api/registrar', methods=["POST"])
 def api_registrar():
     try:
-        logger.debug(f"Request of register: {request.form.to_dict()}")
+        logger.debug(f"Request of register: {request.form}")
         reg = Registro.new(**{f"reg_{dado['nome']}": request.form[f"reg_{dado['nome']}"] for dado in utils.get_data() if dado["coletar"]})
     except KeyError as e:
         logger.exception(e)
@@ -154,7 +154,7 @@ def api_registrar():
 
 @app.route('/api/gerar_relatorio', methods=["POST"])
 def api_gen_relatorio():
-    logger.debug(f"Generate report: {request.form.to_dict()}")
+    logger.debug(f"Generate report: {request.form}")
     try:
         fpath = sheetmaker.zip_files(sheetmaker.make_sheet(regs=Registro.get_ids(request.form.getlist("reg_ids"))), remove_dirs=True)
     except Exception as e:
@@ -167,9 +167,9 @@ def api_gen_relatorio():
 @app.route('/api/atualizar', methods=["POST"])
 def api_update_registro():
     # post request
-    logger.debug(f"Update: {request.form.to_dict()}")
+    logger.debug(f"Update: {request.form}")
     try:
-        Registro.update(**request.form.to_dict())
+        Registro.update(**request.form)
     except Exception as e:
         logger.exception(e)
         return Response(status=400)
@@ -181,7 +181,7 @@ def api_update_registro():
 @app.route('/api/delete', methods=["POST"])
 def api_delete_registro():
     # post request
-    logger.debug(f"Delete: {request.form.to_dict()}")
+    logger.debug(f"Delete: {request.form}")
     try:
         Registro.delete(**request.form)
     except Exception as e:
