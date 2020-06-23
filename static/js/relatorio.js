@@ -3,7 +3,7 @@ function make_checkbox(registro) {
     checkbox.type = "checkbox";
     checkbox.name = "reg_ids";
     checkbox.value = registro["reg_id"];
-    checkbox.checked = true;
+    checkbox.checked = false;
     return checkbox;
 }
 
