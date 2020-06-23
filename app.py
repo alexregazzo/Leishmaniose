@@ -37,6 +37,11 @@ def page_gerar_relatorio():
     return render_template("relatorio.html")
 
 
+@app.route("/relatorios_antigos")
+def page_relatorios_antigos():
+    return render_template("relatorios_antigos.html")
+
+
 @app.route('/adicionar')
 def page_adicionar_registro():
     return render_template("registrar.html")
@@ -124,18 +129,6 @@ def api_dados():
         return Response(response=json.dumps([]), status=400, mimetype="application/json")
 
 
-@app.route('/api/relatorio/<string:fname>')
-def api_get_relatorio(fname: str):
-    fp = os.path.join(settings.ZIP_DIRPATH, secure_filename(fname))
-    logger.debug(f"Get zip file: {fp}")
-    if os.path.isfile(fp):
-        logger.debug(f"File found")
-        return send_file(fp, mimetype="application/zip")
-    else:
-        logger.debug(f"File not found")
-        return Response(status=404)
-
-
 @app.route('/api/registrar', methods=["POST"])
 def api_registrar():
     try:
@@ -162,6 +155,31 @@ def api_gen_relatorio():
         return ""
     else:
         return url_for("api_get_relatorio", fname=os.path.split(fpath)[1])
+
+
+@app.route('/api/relatorio/<string:fname>')
+def api_get_relatorio(fname: str):
+    fp = os.path.join(settings.ZIP_DIRPATH, secure_filename(fname))
+    logger.debug(f"Get zip file: {fp}")
+    if os.path.isfile(fp):
+        logger.debug(f"File found")
+        return send_file(fp, mimetype="application/zip")
+    else:
+        logger.debug(f"File not found")
+        return Response(status=404)
+
+
+@app.route('/api/relatorios_antigos')
+def api_relatorios_antigos():
+    logger.debug(f"Old reports:")
+    try:
+        reports_paths = [url_for("api_get_relatorio", fname=report_path) for report_path in os.listdir(settings.ZIP_DIRPATH)]
+    except Exception as e:
+        logger.exception(e)
+        return Response(response=json.dumps([]), status=400)
+    else:
+        logger.debug(f"Success: {reports_paths}")
+        return Response(response=json.dumps(reports_paths), status=200)
 
 
 @app.route('/api/atualizar', methods=["POST"])
@@ -228,7 +246,8 @@ if __name__ == '__main__':
     import platform
 
     if platform.system() == "Windows":
-        app.run(host="127.0.0.1", port=5000, debug=True)
+        # app.run(host="127.0.0.1", port=5000, debug=True)
+        app.run(host="0.0.0.0", port=5000, debug=True)
     elif platform.system() == "Linux":
         print("Log directed to file")
         utils.get_logger(__file__, LOG_NAME="werkzeug")

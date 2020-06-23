@@ -102,10 +102,14 @@ function make_get_params(params) {
 
 function download(dataurl, filename) {
     let a = document.createElement("a");
-    a.href = dataurl;
+    a.innerText = filename;
+    a.setAttribute("href", dataurl);
     a.setAttribute("download", filename);
+    let relatorios = document.getElementById("relatorios");
+    relatorios.appendChild(a);
     a.click();
 }
+
 
 function get_week_ago(d) {
     return new Date(d.getTime() - d.getTime() % (24 * 60 * 60 * 1000) + d.getTimezoneOffset() * 60000 - 7 * 24 * 60 * 60 * 1000);
