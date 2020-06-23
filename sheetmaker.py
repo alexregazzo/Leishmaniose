@@ -40,7 +40,7 @@ def _make_sheet(*, filename, regs: typing.List[registro.Registro]) -> typing.Lis
             fn, fe = os.path.splitext(filename)
             results.extend(_make_sheet(filename=(fn + f"_F{int(i // 18)}" + fe), regs=regs[i:i + 18]))
         return results
-    doc = docx.Document("planilha_relatorio.docx")
+    doc = docx.Document(os.path.join(settings.ROOT_DIRPATH, "planilha_relatorio.docx"))
     dados = utils.get_data()
     table = doc.tables[0]
     estatistica = {"teste": {}}
