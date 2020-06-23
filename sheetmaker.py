@@ -83,7 +83,7 @@ def make_filename(*, quadra: str) -> str:
 
 
 def make_sheet(*, quadra: typing.Union[int, str] = None, regs: typing.List[registro.Registro] = None) -> typing.List[str]:
-    logger.debug(quadra, regs)
+    logger.debug(str(quadra) + str(regs))
     if quadra is not None:
         quadra = str(quadra)
     if regs is None:
