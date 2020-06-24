@@ -12,26 +12,37 @@
     }
 
     td:nth-of-type(4):before {
-        content: "Quadra";
+        content: "Nome do proprietário";
     }
 
     td:nth-of-type(5):before {
-        content: "Situação da coleta";
+        content: "Endereço";
     }
 
     td:nth-of-type(6):before {
-        content: "Data da coleta";
+        content: "Quadra";
     }
 
     td:nth-of-type(7):before {
-        content: "Teste - Data do exame";
+        content: "Situação da coleta";
     }
 
     td:nth-of-type(8):before {
-        content: "Teste - resultado";
+        content: "Data da coleta";
     }
 
     td:nth-of-type(9):before {
+        content: "Teste - Data do exame";
+    }
+
+    td:nth-of-type(10):before {
+        content: "Teste - resultado";
+    }
+
+    td:nth-of-type(11):before {
         content: "Adicionado em";
+    }
+    td:nth-of-type(12):before {
+        content: "Laudo";
     }
 }

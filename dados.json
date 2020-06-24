@@ -5,6 +5,7 @@
     "coletar": null,
     "tipo": "int",
     "planilha": null,
+    "laudo": null,
     "valores": null
   },
   {
@@ -13,6 +14,7 @@
     "coletar": "number",
     "tipo": "int",
     "planilha": 0,
+    "laudo": "ra",
     "valores": null
   },
   {
@@ -21,6 +23,7 @@
     "coletar": "text",
     "tipo": "text",
     "planilha": 1,
+    "laudo": "nomeanimal",
     "valores": null
   },
   {
@@ -29,6 +32,7 @@
     "coletar": "text",
     "tipo": "text",
     "planilha": null,
+    "laudo": "nomeprop",
     "valores": null
   },
   {
@@ -37,6 +41,7 @@
     "coletar": "text",
     "tipo": "text",
     "planilha": null,
+    "laudo": "endereco",
     "valores": null
   },
   {
@@ -45,6 +50,7 @@
     "coletar": "number",
     "tipo": "int",
     "planilha": null,
+    "laudo": null,
     "valores": null
   },
   {
@@ -53,6 +59,7 @@
     "coletar": "text",
     "tipo": "text",
     "planilha": 3,
+    "laudo": null,
     "valores": [
       "",
       "COLETADO",
@@ -71,6 +78,7 @@
     "coletar": "date",
     "tipo": "date",
     "planilha": 4,
+    "laudo": "datacoleta",
     "valores": null
   },
   {
@@ -79,6 +87,7 @@
     "coletar": "date",
     "tipo": "date",
     "planilha": 5,
+    "laudo": "dataexame",
     "valores": null
   },
   {
@@ -87,6 +96,7 @@
     "coletar": "text",
     "tipo": "text",
     "planilha": 6,
+    "laudo": null,
     "valores": [
       "",
       "NEGATIVO",
@@ -100,6 +110,7 @@
     "coletar": null,
     "tipo": "datetime",
     "planilha": null,
+    "laudo": null,
     "valores": null
   }
 ]

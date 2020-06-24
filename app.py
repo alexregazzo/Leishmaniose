@@ -6,6 +6,7 @@ import utils
 import json
 from datetime import datetime
 import sheetmaker
+import laudomaker
 import planilha
 import settings
 
@@ -149,7 +150,7 @@ def api_registrar():
 def api_gen_relatorio():
     logger.debug(f"Generate report: {request.form}")
     try:
-        fpath = sheetmaker.zip_files(sheetmaker.make_sheet(regs=Registro.get_ids(request.form.getlist("reg_ids"))), remove_dirs=True)
+        fpath = utils.zip_files(sheetmaker.make_sheet(regs=Registro.get_ids(request.form.getlist("reg_ids"))), remove_dirs=True)
     except Exception as e:
         logger.exception(e)
         return ""
@@ -180,6 +181,43 @@ def api_relatorios_antigos():
     else:
         logger.debug(f"Success: {reports_paths}")
         return Response(response=json.dumps(reports_paths), status=200)
+
+
+@app.route('/api/gerar_laudo', methods=["POST"])
+def api_gen_laudo():
+    logger.debug(f"Generate laudo: {request.form}")
+    try:
+        fpath = laudomaker.make_laudos(Registro.get_ids([request.form.get("reg_id")]))[0]
+    except Exception as e:
+        logger.exception(e)
+        return ""
+    else:
+        return url_for("api_get_laudo", fname=os.path.split(fpath)[1])
+
+
+@app.route('/api/laudo/<string:fname>')
+def api_get_laudo(fname: str):
+    fp = os.path.join(settings.LAUDO_DIRPATH, secure_filename(fname))
+    logger.debug(f"Get laudo file: {fp}")
+    if os.path.isfile(fp):
+        logger.debug(f"File found")
+        return send_file(fp, mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    else:
+        logger.debug(f"File not found")
+        return Response(status=404)
+
+
+@app.route('/api/laudos_antigos')
+def api_laudos_antigos():
+    logger.debug(f"Old laudos:")
+    try:
+        laudos_paths = [url_for("api_get_laudo", fname=laudo_path) for laudo_path in os.listdir(settings.LAUDO_DIRPATH)]
+    except Exception as e:
+        logger.exception(e)
+        return Response(response=json.dumps([]), status=400)
+    else:
+        logger.debug(f"Success: {laudos_paths}")
+        return Response(response=json.dumps(laudos_paths), status=200)
 
 
 @app.route('/api/atualizar', methods=["POST"])

@@ -2,35 +2,9 @@ import docx
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 import os
 import registro
-from datetime import datetime
 import typing
 import utils
-from zipfile import ZipFile
 import settings
-
-
-def make_unique_filepath(fpath: str) -> str:
-    logger.debug(f"Path checking: {fpath}")
-    if os.path.exists(fpath):
-        fname, fext = os.path.splitext(fpath)
-        fpath = fname + " ({})" + fext
-        k = 0
-        while os.path.exists(fpath.format(k)):
-            k += 1
-        fpath = fpath.format(k)
-    else:
-        logger.debug("Path doesn't exist")
-    logger.debug(f"Path name is: {fpath}")
-    return fpath
-
-
-def parse_date(datestr: str) -> str:
-    try:
-        d = datetime.strptime(datestr, "%Y-%m-%d")
-    except ValueError:
-        return datestr
-    else:
-        return d.strftime("%d/%m/%Y")
 
 
 def _make_sheet(*, filename, regs: typing.List[registro.Registro]) -> typing.List[str]:
@@ -53,7 +27,7 @@ def _make_sheet(*, filename, regs: typing.List[registro.Registro]) -> typing.Lis
                 continue
             texto = reg[f"reg_{dado['nome']}"]
             if dado["tipo"] == "date":
-                texto = parse_date(texto)
+                texto = utils.strstd2strusr(texto)
             if dado["valores"] is not None:
                 if texto == "0":
                     texto = ""
@@ -68,18 +42,14 @@ def _make_sheet(*, filename, regs: typing.List[registro.Registro]) -> typing.Lis
 
     if os.path.splitext(filename)[1] != ".docx":
         filename += ".docx"
-    filepath = make_unique_filepath(os.path.join(settings.REPORT_DIRPATH, filename))
+    filepath = utils.make_unique_filepath(os.path.join(settings.REPORT_DIRPATH, filename))
     logger.debug(f"Report file save as: {filepath}")
     doc.save(filepath)
     return [filepath]
 
 
-def get_datetime_for_file() -> str:
-    return datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-
 def make_filename(*, quadra: str) -> str:
-    return get_datetime_for_file() + "_Q" + quadra.zfill(4)
+    return utils.get_datetime_for_file() + "_Q" + quadra.zfill(4)
 
 
 def make_sheet(*, quadra: typing.Union[int, str] = None, regs: typing.List[registro.Registro] = None) -> typing.List[str]:
@@ -108,16 +78,6 @@ def make_sheet(*, quadra: typing.Union[int, str] = None, regs: typing.List[regis
     return results
 
 
-def zip_files(files: typing.List[str], *, remove_dirs: bool = False) -> str:
-    logger.debug(f"Zipping files: {files}")
-    zippath = make_unique_filepath(os.path.join(settings.ZIP_DIRPATH, get_datetime_for_file() + '.zip'))
-    logger.debug(f"Zip started")
-    with ZipFile(zippath, 'w') as myzip:
-        for file in files:
-            logger.debug(f"Writing file {file}")
-            myzip.write(file, arcname=(os.path.split(file)[1] if remove_dirs else None))
-            logger.debug(f"Success")
-    return zippath
 
 
 logger = utils.get_logger(__file__)

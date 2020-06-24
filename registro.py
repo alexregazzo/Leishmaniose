@@ -35,7 +35,7 @@ class Registro:
             return [cls(**reg) for reg in db.select(query)]
 
     @classmethod
-    def get_ids(cls, reg_ids, *, desc=False) -> typing.List[Registro]:
+    def get_ids(cls, reg_ids: list, *, desc=False) -> typing.List[Registro]:
         query = f"""SELECT * FROM `registro` WHERE `reg_id` in ({", ".join([f"'{reg_id}'" for reg_id in reg_ids])}){' ORDER BY `reg_data_adicionado` DESC' if desc else ''};"""
         with Database() as db:
             return [cls(**reg) for reg in db.select(query)]

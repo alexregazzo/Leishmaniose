@@ -1,11 +1,4 @@
-function make_checkbox(registro) {
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = "reg_ids";
-    checkbox.value = registro["reg_id"];
-    checkbox.checked = false;
-    return checkbox;
-}
+
 
 function update_regs() {
     let filtro_quadra = document.getElementById("filtro_quadra").value;
@@ -27,7 +20,8 @@ function gen_report() {
         {method: "POST", body: new FormData(document.querySelector("#form_registros_relatorio"))})
         .then(resp => resp.text())
         .then(function (path) {
-            download(path, path.split("/").slice(-1)[0]);
+            let relatorios = document.getElementById("relatorios");
+            relatorios.appendChild(download(path, path.split("/").slice(-1)[0]));
         })
 }
 

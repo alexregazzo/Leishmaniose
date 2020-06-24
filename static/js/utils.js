@@ -105,11 +105,55 @@ function download(dataurl, filename) {
     a.innerText = filename;
     a.setAttribute("href", dataurl);
     a.setAttribute("download", filename);
-    let relatorios = document.getElementById("relatorios");
-    relatorios.appendChild(a);
     a.click();
+    return a;
 }
 
+function make_get_laudo_button(registro) {
+    let button = document.createElement("button");
+    button.type = "button";
+    button.innerHTML = "Gerar laudo";
+    button.addEventListener("click", function () {
+        let form = new FormData();
+        form.append("reg_id", registro["reg_id"]);
+        fetch("/api/gerar_laudo", {
+            method: "POST",
+            body: form
+        })
+            .then(function (resp) {
+                if (resp.ok) {
+                    return resp.text();
+                }
+            })
+            .then(function (url) {
+                console.log(url);
+                button.replaceWith(download(url, url.split("/").slice(-1)[0]));
+            });
+    });
+    return button;
+}
+
+
+function make_edit(registro) {
+    let button = document.createElement("button");
+    button.type = "button";
+    button.value = registro["reg_id"];
+    button.innerText = "Editar";
+    button.addEventListener('click', function () {
+        window.location.href = "/registro?id=" + registro["reg_id"];
+    });
+    return button;
+}
+
+
+function make_checkbox(registro) {
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "reg_ids";
+    checkbox.value = registro["reg_id"];
+    checkbox.checked = false;
+    return checkbox;
+}
 
 function get_week_ago(d) {
     return new Date(d.getTime() - d.getTime() % (24 * 60 * 60 * 1000) + d.getTimezoneOffset() * 60000 - 7 * 24 * 60 * 60 * 1000);

@@ -1,20 +1,3 @@
-function make_edit(registro) {
-    let button = document.createElement("button");
-    button.type = "button";
-    button.value = registro["reg_id"];
-    button.innerText = "Editar";
-    button.addEventListener('click', function () {
-        edit_registry(button.value);
-    });
-    return button;
-}
-
-
-function edit_registry(id) {
-    window.location.href = "/registro?id=" + id;
-}
-
-
 function update_regs() {
     let fd = new FormData(document.getElementById("form_registros_relatorio"));
     let filters_dict = {};
@@ -23,7 +6,7 @@ function update_regs() {
     Promise.all([fetch("/api/dados").then(r => r.json()), fetch("/api/registros?desc&" + filters).then(r => r.json())])
         .then(function ([dados, registros]) {
             let ptable = document.getElementById("registros");
-            let ntable = create_table_registros(dados, registros, ["Editar", make_edit]);
+            let ntable = create_table_registros(dados, registros, ["Editar", make_edit], ["Laudo", make_get_laudo_button]);
             ptable.replaceWith(ntable);
         });
 }
