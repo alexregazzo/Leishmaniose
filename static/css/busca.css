@@ -42,6 +42,7 @@
     td:nth-of-type(11):before {
         content: "Adicionado em";
     }
+
     td:nth-of-type(12):before {
         content: "Laudo";
     }

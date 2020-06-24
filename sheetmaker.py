@@ -78,8 +78,6 @@ def make_sheet(*, quadra: typing.Union[int, str] = None, regs: typing.List[regis
     return results
 
 
-
-
 logger = utils.get_logger(__file__)
 if __name__ == "__main__":
     pass

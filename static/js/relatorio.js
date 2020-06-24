@@ -1,5 +1,3 @@
-
-
 function update_regs() {
     let filtro_quadra = document.getElementById("filtro_quadra").value;
     let filtro_data_add_inicio = document.getElementById("filtro_data_add_inicio").value;
